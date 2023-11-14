@@ -93,8 +93,7 @@ public class PgBookService implements BookService {
     if ( insertCategoryOpt.isPresent() ) {
       return insertCategoryOpt.get();
     } else {
-      Category newCategory = categoryRepository.save( new Category( null, categoryDescription, null ) );
-      return newCategory;
+      return categoryRepository.save( new Category( null, categoryDescription, null ) );
     }
   }
 
