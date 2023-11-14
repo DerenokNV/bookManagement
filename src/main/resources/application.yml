@@ -1,0 +1,29 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  jpa:
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5433/app_db
+    username: user
+    password: 123
+    hikari:
+      schema: app_schema
+      connection-ini-sql: CREATE SCHEMA IF NOT EXISTS app_schema
+      connection-timeout: 10000
+
+app:
+  redis:
+    enable: true
+  cache:
+    cacheType: redis
+    cache-names:
+      - databaseFindByTitleAndAuthor
+      - databaseFindByCategory
+    caches:
+      databaseFindByTitleAndAuthor:
+        expiry: 10m
+      databaseFindByCategory:
+        expiry: 10m
