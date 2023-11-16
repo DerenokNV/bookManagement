@@ -27,6 +27,8 @@ import java.util.Optional;
 @Slf4j
 public class PgBookService implements BookService {
 
+  private static final String ERROR_BOOK_IN_CATEGORY = "Книги в категории {0} не найдены, в связи с отсутствием такой категории )";
+
   private final BookRepository bookRepository;
 
   private final CategoryRepository categoryRepository;
@@ -48,12 +50,12 @@ public class PgBookService implements BookService {
   public List<Book> findByCategoryName( String categoryDescription ) {
     Optional<Category> categoryOpt = categoryRepository.customFindByDescriptio( categoryDescription );
     if ( ! categoryOpt.isPresent() ) {
-      throw new EntityNotFoundException( MessageFormat.format( "Книги в категории {0} не найдены, в связи с отсутствием такой категории )", categoryDescription ) );
+      throw new EntityNotFoundException( MessageFormat.format( ERROR_BOOK_IN_CATEGORY, categoryDescription ) );
     }
 
     List<Book> booksCategories = bookRepository.findByCategoryId( categoryOpt.get().getId() );
     if ( booksCategories.isEmpty() ) {
-      throw new EntityNotFoundException( MessageFormat.format( "Книги в категории {0} не найдены, в связи с отсутствием такой категории )", categoryDescription ) );
+      throw new EntityNotFoundException( MessageFormat.format( ERROR_BOOK_IN_CATEGORY, categoryDescription ) );
     } else {
       return booksCategories;
     }
